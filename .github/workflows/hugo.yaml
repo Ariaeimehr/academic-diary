@@ -1,6 +1,5 @@
 # ==============================================================================
 # GITHUB ACTIONS WORKFLOW: Build & Deploy Hugo Blox to GitHub Pages
-# File: .github/workflows/hugo.yaml
 # ==============================================================================
 name: Deploy Hugo site to Pages
 
@@ -23,7 +22,6 @@ defaults:
   run:
     shell: bash
 
-# Force GitHub Actions to use Node 24 for all steps
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -31,8 +29,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: "0.124.0" # قفل شده روی سازگارترین نسخه
-      GO_VERSION: "1.24.0"
+      HUGO_VERSION: "0.124.0"
+      GO_VERSION: "1.21.0"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -56,13 +54,11 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
 
-      - name: Lock Hugo Modules to Stable v5.9.7 (Fix for get_hook)
+      - name: Fetch and Lock Hugo Modules
         run: |
           rm -f go.mod go.sum
           hugo mod init github.com/Ariaeimehr/academic-diary
           hugo mod get github.com/HugoBlox/hugo-blox-builder/modules/blox-bootstrap/v5@v5.9.7
-          hugo mod get github.com/HugoBlox/hugo-blox-builder/modules/blox-core/v5@v5.9.7
-          hugo mod get ./...
           hugo mod tidy
 
       - name: Build with Hugo
