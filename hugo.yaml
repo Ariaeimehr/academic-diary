@@ -1,0 +1,129 @@
+# ==============================================================================
+# HUGO BLOX (WOWCHEMY ACADEMIC) CONFIGURATION
+# Tailored for GitHub Pages & Fast Daily Research Feed
+# ==============================================================================
+
+baseURL: "https://traoquach.github.io/academic-notes/"
+title: "Trao Quach | Academic Research Notes"
+copyright: "© {year} Trao Quach. Licensed under CC BY 4.0."
+defaultContentLanguage: "en"
+enableEmoji: true
+enableGitInfo: true
+paginate: 8
+
+# ------------------------------------------------------------------------------
+# HUGO MODULES (Hugo Blox ecosystem)
+# ------------------------------------------------------------------------------
+module:
+  imports:
+    - path: github.com/HugoBlox/hugo-blox-builder/modules/blox-bootstrap/v5
+    - path: github.com/HugoBlox/hugo-blox-builder/modules/blox-plugin-decap-cms
+
+# ------------------------------------------------------------------------------
+# MARKDOWN & RENDERING ENGINE (Goldmark with LaTeX & Unsafe HTML enabled)
+# ------------------------------------------------------------------------------
+markup:
+  goldmark:
+    renderer:
+      unsafe: true # Required for Decap CMS, MathJax rendering, and custom raw badges
+    extensions:
+      passthrough:
+        enable: true
+        delimiters:
+          block:
+            - ["\\[", "\\]"]
+            - ["$$", "$$"]
+          inline:
+            - ["\\(", "\\)"]
+            - ["$", "$"]
+  highlight:
+    codeFences: true
+    guessSyntax: true
+    lineNos: false
+    style: monokai
+
+# ------------------------------------------------------------------------------
+# TAXONOMIES (For filtering research topics like Federated Learning, HAR, etc.)
+# ------------------------------------------------------------------------------
+taxonomies:
+  tag: tags
+  category: categories
+  author: authors
+
+# ------------------------------------------------------------------------------
+# NAVIGATION MENU (Clean, feed-first academic header)
+# ------------------------------------------------------------------------------
+menu:
+  main:
+    - name: "Home"
+      url: "/"
+      weight: 10
+    - name: "Daily Research Feed"
+      url: "/post/"
+      weight: 20
+    - name: "Topics"
+      url: "/tags/"
+      weight: 30
+    - name: "About"
+      url: "/#about"
+      weight: 40
+    - name: "CMS Admin"
+      url: "/admin/"
+      weight: 50
+
+# ------------------------------------------------------------------------------
+# THEME & ACADEMIC FEATURES (Params)
+# ------------------------------------------------------------------------------
+params:
+  theme:
+    name: minimal # Options: minimal, ocean, emerald, dark, academic
+  
+  # Enable built-in Math rendering for research formulas (KaTeX / MathJax)
+  features:
+    math:
+      enable: true
+    syntax_highlighter:
+      enable: true
+      theme: github-dark
+    search:
+      provider: wowchemy
+
+  header:
+    navbar:
+      enable: true
+      align: l
+      show_logo: true
+
+  footer:
+    community:
+      social_share: true
+
+  # Academic Researcher Profile (Shown on author card and home widget)
+  author:
+    name: "Trao Quach"
+    role: "Ph.D. Researcher & Machine Learning Engineer"
+    organizations:
+      - name: "Edge Intelligence & Pervasive Sensing Lab"
+    bio: "Researching decentralized deep learning, non-IID sensor stream adaptation, and privacy-preserving Human Activity Recognition (HAR) on low-power wearable edge devices."
+    interests:
+      - "Federated Learning (FL)"
+      - "Human Activity Recognition (HAR)"
+      - "Deep Learning & Transformers"
+      - "Edge AI & Model Compression"
+      - "Differential Privacy"
+    social:
+      - icon: envelope
+        icon_pack: fas
+        link: "mailto:researcher@academic.edu"
+      - icon: graduation-cap
+        icon_pack: fas
+        link: "https://scholar.google.com/"
+      - icon: orcid
+        icon_pack: fab
+        link: "https://orcid.org/0000-0002-1825-0097"
+      - icon: github
+        icon_pack: fab
+        link: "https://github.com/traoquach"
+      - icon: linkedin
+        icon_pack: fab
+        link: "https://linkedin.com/in/"

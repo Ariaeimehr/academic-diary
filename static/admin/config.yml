@@ -1,0 +1,91 @@
+# ==============================================================================
+# DECAP CMS CONFIGURATION FOR ACADEMIC NOTES
+# Path: static/admin/config.yml
+# ==============================================================================
+
+# Backend configuration for direct GitHub integration
+backend:
+  name: github
+  repo: traoquach/academic-notes
+  branch: main
+  # Authentication Provider:
+  # Option A: Free Decap CMS OAuth proxy (recommended default for GitHub Pages)
+  base_url: https://api.decapcms.org
+  auth_endpoint: auth
+  # Option B: If using Netlify for DNS/Hosting, uncomment below:
+  # name: git-gateway
+
+# Media uploads directory
+media_folder: "static/media"
+public_folder: "/media"
+
+# Enable publishing workflow (Editorial drafts / review / publish)
+publish_mode: simple
+
+# Display settings
+display_url: "https://traoquach.github.io/academic-notes/"
+logo_url: ""
+
+# Collections definition
+collections:
+  # ----------------------------------------------------------------------------
+  # 1. Daily Research Notes / LinkedIn-style Academic Feed
+  # ----------------------------------------------------------------------------
+  - name: "daily_notes"
+    label: "Daily Research Notes"
+    label_singular: "Research Note"
+    folder: "content/post"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    path: "{{year}}-{{month}}-{{day}}-{{slug}}/index"
+    media_folder: ""
+    public_folder: ""
+    summary: "{{title}} ({{date | date('YYYY-MM-DD')}})"
+    sortable_fields: ["date", "title"]
+    view_filters:
+      - label: "Federated Learning"
+        field: "tags"
+        pattern: "Federated Learning"
+      - label: "Human Activity Recognition"
+        field: "tags"
+        pattern: "Human Activity Recognition"
+      - label: "Drafts"
+        field: "draft"
+        pattern: true
+    fields:
+      - { label: "Title", name: "title", widget: "string", hint: "e.g. Dirichlet Allocation in Wearable Sensor Networks" }
+      - { label: "Subtitle", name: "subtitle", widget: "string", required: false, hint: "e.g. Daily Research Note #49 • Edge Systems" }
+      - { label: "Publish Date", name: "date", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZ" }
+      - { label: "Summary", name: "summary", widget: "text", hint: "1-2 sentence overview shown in the social card and RSS feed" }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "Featured Post", name: "featured", widget: "boolean", default: false, required: false }
+      - { 
+          label: "Tags", 
+          name: "tags", 
+          widget: "list", 
+          default: ["Federated Learning", "Human Activity Recognition", "Deep Learning"] 
+        }
+      - { 
+          label: "Categories", 
+          name: "categories", 
+          widget: "list", 
+          default: ["Research Notes"] 
+        }
+      - { label: "Enable LaTeX Math", name: "math", widget: "boolean", default: true }
+      - { label: "Body (Markdown + LaTeX)", name: "body", widget: "markdown" }
+
+  # ----------------------------------------------------------------------------
+  # 2. Researcher Profile & Bio Settings (content/authors/admin/_index.md)
+  # ----------------------------------------------------------------------------
+  - name: "author_profile"
+    label: "Researcher Profile"
+    files:
+      - file: "content/authors/admin/_index.md"
+        label: "Admin Author Bio"
+        name: "admin_bio"
+        fields:
+          - { label: "Display Name", name: "title", widget: "string" }
+          - { label: "Role / Academic Title", name: "role", widget: "string" }
+          - { label: "Bio Summary", name: "bio", widget: "text" }
+          - { label: "Interests", name: "interests", widget: "list" }
+          - { label: "Detailed Biography", name: "body", widget: "markdown" }
