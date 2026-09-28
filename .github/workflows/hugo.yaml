@@ -31,7 +31,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: "0.144.0" # ارتقا به آخرین نسخه (خطای صفحه‌بندی قبلاً رفع شد)
+      HUGO_VERSION: "0.124.0" # قفل شده روی سازگارترین نسخه
       GO_VERSION: "1.24.0"
     steps:
       - name: Checkout repository
@@ -44,7 +44,7 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
-          cache: false # غیرفعال کردن کش برای جلوگیری از تداخل
+          cache: false
 
       - name: Setup Hugo Extended
         uses: peaceiris/actions-hugo@v3
@@ -56,12 +56,13 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
 
-      - name: Initialize & Fetch Hugo Modules (Fix for get_hook)
+      - name: Lock Hugo Modules to Stable v5.9.7 (Fix for get_hook)
         run: |
           rm -f go.mod go.sum
           hugo mod init github.com/Ariaeimehr/academic-diary
-          hugo mod clean --all
-          hugo mod get -u ./...
+          hugo mod get github.com/HugoBlox/hugo-blox-builder/modules/blox-bootstrap/v5@v5.9.7
+          hugo mod get github.com/HugoBlox/hugo-blox-builder/modules/blox-core/v5@v5.9.7
+          hugo mod get ./...
           hugo mod tidy
 
       - name: Build with Hugo
